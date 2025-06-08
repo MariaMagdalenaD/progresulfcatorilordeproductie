@@ -1,0 +1,766 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Teste grila</title>
+	<link rel="stylesheet" type="text/css" href="sdmenu/sdmenu.css" />
+	<script type="text/javascript" src="sdmenu/sdmenu.js">
+	</script>
+	<script type="text/javascript">
+	// <![CDATA[
+	var myMenu;
+	window.onload = function() {
+		myMenu = new SDMenu("my_menu");
+		myMenu.init();
+	};
+	
+	// Insert number of questions
+
+var numQues = 10;
+var numTF = 2;
+// Insert number of choices in each question
+var numChoi = 4;
+var numRasp = 2; 
+// Insert number of questions displayed in answer area
+var answers = new Array(10);
+var ansTF = new Array(2);
+// Insert answers to questions
+answers[0] = "c";
+answers[1] = "d";
+answers[2] = "a";
+answers[3] = "b";
+answers[4] = "a";
+answers[5] = "D";
+answers[6] = "C";
+answers[7] = "B";
+answers[8] = "A";
+answers[9] = "C";
+
+ansTF[0] = "Adevarat";
+ansTF[1] = "Fals";
+
+
+function Rasp(form) {
+  var score = 0;
+  var currElt;
+  var currSelection;
+  for (i=0; i<numTF; i++) {
+    currElt = i*numRasp;
+    for (j=0; j<numRasp; j++) {
+      currSelection = form.elements[currElt + j];
+      if (currSelection.checked) {
+        if (currSelection.value == ansTF[i]) {
+          score++;
+          break;
+        }
+      }
+    }
+  }
+ //score = Math.round(score/numQues*100);
+ //form.percentage.value = score + "%";
+ form.corecte.value = score;
+ form.gresite.value = numTF - score;
+ form.punctaj.value = score*10; 
+  var correctAnswers = "";
+ for (i=1; i<=numTF; i++) {
+ correctAnswers += i + ". " + ansTF[i-1] + "\r\n";
+ }
+  form.solutions.value = correctAnswers;
+  form.but1.disabled = true;
+
+}
+
+function Rasp1(form) {
+  //var score = 0;
+ // var currElt;
+ // var currSelection;
+  //for (i=0; i<numTF; i++) {
+   // currElt = i*numRasp;
+   // for (j=0; j<numRasp; j++) {
+    //  currSelection = form.elements[currElt + j];
+      if ((form.rasp1.value == "amortizare") && (form.rasp2.value == "factori de productie"))
+       {form.punctaj.value = 20;}
+ 		if ((form.rasp1.value != "amortizare") && (form.rasp2.value == "factori de productie"))
+      		 {form.punctaj.value = 10;}
+  		  if ((form.rasp1.value == "amortizare") && (form.rasp2.value != "factori de productie"))
+       		   {form.punctaj.value = 10;}
+				if ((form.rasp1.value != "amortizare") && (form.rasp2.value != "factori de productie"))
+       		        {form.punctaj.value = 0;}
+
+ 
+//    }
+  //}
+ //score = Math.round(score/numQues*100);
+ //form.percentage.value = score + "%";
+// form.corecte.value = score;
+// form.gresite.value = numTF - score;
+// form.punctaj.value = score*10; 
+ var rasp = new Array(2);
+ rasp[0]= "amortizare";
+ rasp[1]= "factori de productie" 
+ var correctAnswers = "";
+ for (i=1; i<=2; i++) {
+ correctAnswers += i + ". " + rasp[i-1] + "\r\n";
+ 
+}
+ form.solutions.value = correctAnswers;
+ form.but2.disabled = true;
+}
+
+
+ 
+// Do not change anything below here ...
+function getScore(form) {
+  var score = 0;
+  var currElt;
+  var currSelection;
+  for (i=0; i<numQues; i++) {
+    currElt = i*numChoi;
+    for (j=0; j<numChoi; j++) {
+      currSelection = form.elements[currElt + j];
+      if (currSelection.checked) {
+        if (currSelection.value == answers[i]) {
+          score++;
+          break;
+        }
+      }
+    }
+  }
+ //score = Math.round(score/numQues*100);
+ //form.percentage.value = score + "%";
+ form.corecte.value = score;
+ form.gresite.value = numQues - score;
+ form.punctaj.value = score*6; 
+
+ var correctAnswers = "";
+ for (i=1; i<=numQues; i++) {
+ correctAnswers += i + ". " + answers[i-1] + "\r\n";
+ }
+  form.solutions.value = correctAnswers;
+  form.but3.disabled = true;
+
+}
+function PunctajTotal(form)
+{
+  if((document.quiz1.but1.disabled == false)||(document.quiz2.but2.disabled == false)||(document.quiz3.but3.disabled == false))
+  {
+  	alert("Nu ati completat toate testele!");
+  	punctajt.value = 0;
+  }
+   
+     if((document.quiz1.but1.disabled == true)&&(document.quiz2.but2.disabled == true)&&(document.quiz3.but3.disabled == true))
+  {
+      punctajt.value = parseInt(document.quiz1.punctaj.value) + parseInt(document.quiz2.punctaj.value) + parseInt(document.quiz3.punctaj.value);
+   
+   if (parseInt(punctajt.value) >=70)
+      {alert("Felicitari! Ati trecut testul! Ati acumulat "  +  punctajt.value  +  " puncte!");}
+   if (parseInt(punctajt.value) <70)
+      {alert("Ne pare rau! Nu ati trecut testul! Ati acumulat doar " + punctajt.value + " puncte!");}
+	}
+   
+ }   
+function Reset(form)
+{
+      document.quiz1.but1.disabled = false;
+	  document.quiz2.but2.disabled = false;
+	  document.quiz3.but3.disabled = false;
+	  document.quiz1.reset();
+	  document.quiz2.reset();
+	  document.quiz3.reset();
+	  punctajt.value = 0;
+
+	
+}
+	// ]]>
+	</script>
+  </head>
+  <body>
+   
+   
+  	<div align="center">
+		<table width="980" id="table1" bgcolor="#FFFFFF" height="802">
+			<tr>
+				<td height="21" colspan="2" bgcolor="#008080" style="border: 1px solid #008080">
+				<p align="center" style="margin-top: 0; margin-bottom: 0">
+				<font face="Algerian" color="#FFFFFF" size="4">PROGRESUL 
+				FACTORILOR DE PRODUCTIE SI EFECTELE SALE ASUPRA SOCIETATII</font></td>
+			</tr>
+			<tr>
+				<td height="105" colspan="2" style="border: 1px solid #008080">
+				<img border="0" src="imagini/header_foto.jpg" width="980" height="102"></td>
+			</tr>
+			<tr>
+				<td valign="top" align="center" colspan="2" bgcolor="#008080" style="border: 1px solid #008080">
+				 <p align="right" style="margin-top: 0; margin-bottom: 0">
+					<font face="Arial" size="2" color="#FFFFFF">
+					<a style="text-decoration: none; color: #FFFFFF" href="prima-pagina.html">Prima pagina</a> | 
+					<a style="text-decoration: none; color: #FFFFFF" href="Contact.html">Contact</a> </font></td>
+			</tr>
+			<tr>
+				<td width="271" valign="top" align="center" height="624" style="border: 1px solid #008080">
+				
+				 <div style="float: left; width:278px; height:242px" id="my_menu" class="sdmenu">
+       <div>
+         <span>Introducere</span>
+        <a href="Introducere.html">Introducere</a>
+        <a href="Argument.html">Argument</a>
+        </div>
+        <div>
+        <span>I. Factori de productie</span>
+        <a href="I.1.html">I.1. Munca - factor activ si determinat al productiei</a>
+        <a href="I.2.html">I.2. Natura - factor de productie</a>
+        <a href="I.3.html">I.3. Capitalul</a>
+        <a href="I.4.html">I.4. Noi factori de productie (Neofactori)</a>
+        </div>
+      <div>
+        <span>II. Capitalul tehnic; Progresul FP</span>
+        <a href="II.1.html">II.1. Capitalul fix si capitalul circulant</a>
+        <a href="II.2.html">II.2. Aspectul cantitativ si calitativ al pogresului factorilor de productie</a>
+        <a href="II.3.html">II.3. Dezvoltarea economica extensiva si intensiva</a>
+      </div>
+      <div>
+         <span>III. Progresul tehnic si progresul economic</span>
+        <a href="III.1.html">III.1. Reglarea economica a progresului tehnic</a>
+        <a href="III.2.html">III.2. Inovare si inovatie</a>
+        </div>
+       <div>
+        <span>IV. Progresul tehnic si societatea</span>
+        <a href="IV.1.html">IV.1. Revolutia industriala si progresul tehnic</a>
+        <a href="IV.2.html">IV.2. Tendintele cercetarii stiintifice pe termen lung</a>
+        <a href="IV.3.html">IV.3. Rezistenta sociala la progresul tehnic</a>
+      </div>
+      <div>
+        <span>V. Economia informatiei</span>
+        <a href="V.1.html">V.1. Premisele economiei informatiei</a>
+        <a href="V.2.html">V.2. Caracteristicile economiei tehnico-informationale intensive</a>
+		<a href="V.3.html">V.3. Tipologii ale informatiei</a>
+		<a href="V.4.html">V.4. Bunurile si resursele informationale</a>
+		<a href="V.5.html">V.5. Piata informatiei</a>
+       </div>
+      <div>
+        <span>VI. Concluzii</span>
+        <a href="VI.1.html">VI.1. Concluziile referatului</a>
+       </div>
+        <div>
+        <span>VII. Aplicatii. Verificare. Punctaj</span>
+        <a href="Teste_grila.html">VII.1. Test grila</a>
+        </div>
+	<div>
+        <span>Anexe</span>
+        <a href="Anexa_1.html">1. Mic dictionar explicativ</a>
+        <a href="Anexa_2.html">2. Instructiuni de folosire a paginii web</a>
+        <a href="Anexa_3.html">3. Bibliografie</a>
+      </div>
+    </div>
+
+    <div style="padding-left: 100px">
+      <pre>
+ </pre>
+      </div>
+				</td>
+				<td width="709" style="border-right:1px solid #008080; border-top:1px solid #008080; border-bottom:1px solid #008080; border-left-width:1px" height="624" align="center" valign="top">
+				<div align="center">
+					<table border="0" width="98%" id="table2">
+						<tr>
+							<td colspan="2" align="center">
+							<b><font face="Arial">TESTE GRILA</font></b></td>
+						</tr>
+						<tr>
+							<td bgcolor="#007777" height="40" valign="top" align="left">
+							<font color="#FFFFFF"><font face="Arial" size="2">
+							TEST A<br>
+							</font><span style="font-family: Arial">
+							<font size="2">
+							Care din urmatoarele afirmatii este adevarata si care 
+							este falsa?</font></font></td>
+							<td bgcolor="#007777" width="255" height="40" align="left">
+							<font face="Arial" size="2" color="#FFFFFF">ANALIZA</font></td>
+						</tr>
+						<tr>
+							<td height="202" valign="top" style="border: 1px solid #008080">
+		<form name="quiz1">  
+							
+							<p align="left">
+							<font face="Arial" style="font-size: 9pt">1. Munca este factorul prim si determinant in orice activitate.</font></p>
+							<blockquote>
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font face="Arial">
+							<span style="font-size: 9pt">
+							<input type="radio" name="q1" value="Adevarat"></span><font style="font-size: 9pt">Adevarat</font></font></p>
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font face="Arial">
+							<span style="font-size: 9pt">
+							<input type="radio" name="q1" value="Fals"></span><font style="font-size: 9pt">Fals</font></font></p>
+							</blockquote>
+							<p align="left">
+							<font face="Arial" style="font-size: 9pt">2. Natura si capitalul sunt factori de productie derivati.</font></p>
+							<blockquote>
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font face="Arial">
+							<span style="font-size: 9pt">
+							<input type="radio" name="q2" value="Adevarat"></span><font style="font-size: 9pt">Adevarat</font></font></p>
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font face="Arial">
+							<span style="font-size: 9pt">
+							<input type="radio" name="q2" value="Fals"></span><font style="font-size: 9pt">Fals</font></font></p>
+							</blockquote>
+							<p align="left"> 
+ 
+							
+							
+							
+
+							</td>
+							<td width="254" height="202" valign="top" align="left" style="border-right: 1px solid #008080; border-top: 1px solid #008080; border-bottom: 1px solid #008080">
+							<p align="left" style="line-height: 1px; margin-top: 3px; margin-bottom: 3px"> 
+							<font face="Arial" style="font-size: 9pt">Raspunsuri corecte&nbsp; =
+							</font> <font face="Arial" style="font-size: 3pt">&nbsp;</font><strong><font face="Arial"><span style="font-size: 9pt"><input class="bgclr" type="text" size="4" name="corecte" disabled style="color: #3333CC"></span></font></strong><font face="Arial" style="font-size: 9pt"><br>
+							<br> 
+							Raspunsuri gresite&nbsp;&nbsp; = </font> <strong>
+							<font face="Arial"><span style="font-size: 9pt"><input class="bgclr" type="text" size="4" name="gresite" disabled></span></font></strong><font face="Arial" style="font-size: 9pt"><br>
+							</font> 
+							<p align="left" style="margin-top: 3px; margin-bottom: 3px"> 
+							<font face="Arial" style="font-size: 9pt">Numar de puncte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font face="Arial" style="font-size: 5pt">
+							</font>  
+							<font face="Arial" style="font-size: 9pt">=
+							</font> <strong><font face="Arial">
+							<span style="font-size: 9pt"><input class="bgclr" type="text" size="4" name="punctaj" disabled></span></font></strong><font face="Arial"><font style="font-size: 9pt"><br><br>
+							Rezolvare:<br> 
+							</font> 
+							<span style="font-size: 9pt"> 
+							<textarea class="bgclr" name="solutions" wrap="virtual" rows="3" cols="30" disabled> 
+							</textarea></span><font style="font-size: 9pt"> <br>
+							</font>
+							<span style="font-size: 9pt">
+							<input type="button" value="Verifica" name="but1" onClick="Rasp(this.form)"></span></font></td>
+							</form> 
+						</tr>
+						<tr>
+							<td colspan="2" bgcolor="#008080">
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font size="2" face="Arial" color="#FFFFFF">Fiecare 
+							raspuns corect este notat cu 10 puncte. Total punctaj TEST A = 20 puncte.</font></td>
+						</tr>
+						<tr>
+							<td>
+							&nbsp;</td>
+							<td width="255">
+							&nbsp;</td>
+						</tr>
+						<tr>
+							<td bgcolor="#007777" height="40" valign="top" align="left">
+							<font color="#FFFFFF"><font face="Arial" size="2">
+							TEST B<br>
+							</font><span style="font-family: Arial">
+							<font size="2">Completati spatiile libere cu 
+							termenii adecvati</font></span></font></td>
+							<td bgcolor="#007777" width="255" height="40" align="left">
+							<font face="Arial" size="2" color="#FFFFFF">ANALIZA</font></td>
+						</tr>
+						<tr>
+							<td height="33" style="border: 1px solid #007777">
+			<form name="quiz2">  
+										
+					<p align="left"><span style="font-size: 9pt">
+					<font face="Arial">1. Procesul de recuperare treptata a valorilor 
+					capitalului fix se numeste&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; 
+					<input class="bgclr" type="text" size="14" name="rasp1" style="border: 1px solid #008080"></font></span></p>
+					
+					<p align="left"><span style="font-size: 9pt">
+					<font face="Arial">2. Partea resurselor atrase, alocate si folosite in procesul de producere a bunurilor economice poarta denumirea 
+					de 
+					<input class="bgclr" type="text" size="18" name="rasp2" style="border: 1px solid #008080"> 
+					</font></span> </p>
+					 
+					
+			 
+							</td>
+							<td width="255" height="33" align="left" valign="top" style="border-left-width: 1px; border-right: 1px solid #008080; border-top: 1px solid #008080; border-bottom: 1px solid #008080">
+							
+							<p style="margin-top: 3px; margin-bottom: 3px">
+							<span style="font-size: 9pt"><font face="Arial">&nbsp;</font></span><font face="Arial"><span style="font-size: 9pt">Numar de puncte acumulate =
+							</span></font> <strong><span style="font-size: 9pt">
+							<font face="Arial"><input class="bgclr" type="text" size="4" name="punctaj" disabled></font></span></strong><span style="font-size: 9pt"><font face="Arial"><br><br>
+					&nbsp;Rezolvare:<br> 
+					<textarea class="bgclr" name="solutions" wrap="virtual" rows="3" cols="30" disabled> 
+					</textarea><br>
+&nbsp;<input type="button" value="Verifica" name="but2"  onClick="Rasp1(this.form)"></font></span></td>
+			</form>
+						</tr>
+						<tr>
+							<td colspan="2" bgcolor="#008080">
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font size="2" face="Arial" color="#FFFFFF">Fiecare 
+							raspuns corect este notat cu 10 puncte. Total punctaj TEST 
+							B = 20 puncte.</font></td>
+						</tr>
+						<tr>
+							<td>
+							&nbsp;</td>
+							<td width="255">
+							&nbsp;</td>
+						</tr>
+						<tr>
+							<td bgcolor="#007777" height="40" valign="top" align="left">
+							<font color="#FFFFFF"><font face="Arial" size="2">
+							TEST C<br>
+							</font><span style="font-family: Arial">
+							<font size="2">Indicati raspunsul corect</font></span></font></td>
+							<td bgcolor="#007777" width="255" height="40" align="left">
+							<font face="Arial" size="2" color="#FFFFFF">ANALIZA</font></td>
+						</tr>
+						<tr>
+							<td style="border: 1px solid #008080">
+							
+		<form name="quiz3"> 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">1. Din capitalul circulant face parte:</span></font></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q1" value="Mijloacele"></font></span><font face="Arial"><span style="font-size: 9pt">Mijloacele 
+				de transport</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q1" value="Cladirile"></font></span><font face="Arial"><span style="font-size: 9pt">Cladirile 
+				administrative ale firmei</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q1" value="c"></font></span><font face="Arial"><span style="font-size: 9pt">Energia 
+				consumata in procesul de productie</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q1" value="Depozitul"></font></span><font face="Arial"><span style="font-size: 9pt">Depozitul 
+				pentru produsele finite</span></font></li>
+			</ol>
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">2. 
+			</span></font> <span style="font-size: 9pt; font-family: Arial">
+			Utilizarea factorilor de productie pe principii ecologice:</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q2" value="Dezv"></font></span><span lang="PT-BR" style="font-size: 9pt; font-family: Arial">Este 
+				o preocupare numai a tarilor dezvoltate;</span></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q2" value="SubDezv"></font></span><font face="Arial"><span style="font-size: 9pt">Este o 
+				preocupare numai a tarilor subdezvoltate;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q2" value="Cant"></font></span><span style="font-size:9pt;font-family:&quot;Arial&quot;">Este 
+				un aspect cantitativ al progresului factorilor de productie;</span></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q2" value="d"></font></span><span style="font-size:9pt;font-family:&quot;Arial&quot;">Este 
+				un aspect calitativ al progresului factorilor de productie.</span></li>
+			</ol>
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">3. Pamantul, ca factor de productie
+			</span></font>
+			</p>
+			<ol type="a" style="font-family: Arial; font-size: 10pt">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q3" value="a"></font></span><font face="Arial"><span style="font-size: 9pt">Este 
+				regenerabil;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q3" value="Nelimitat"></font></span><font face="Arial"><span style="font-size: 9pt">Este 
+				nelimitat;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q3" value="Nu apa"></font></span><font face="Arial"><span style="font-size: 9pt">Nu 
+				include si apa;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial">
+				<input type="radio" name="q3" value="Derivat"></font></span><font face="Arial"><span style="font-size: 9pt">Este factor 
+				derivat;</span></font></li>
+			</ol>
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">4.
+			</span></font>
+			<span lang="IT" style="font-size: 9pt; font-family: Arial">Pe 
+			termen lung promovarea progresului tehnic determina:</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q4" value="somaj"></font></span><font face="Arial"><span style="font-size: 9pt">Somaj;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q4" value="b"></font></span><font face="Arial"><span style="font-size: 9pt">Cresterea 
+				numarului de locuri de munca;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q4" value="rezist"></font></span><font face="Arial"><span style="font-size: 9pt">Rezistenta 
+				sociala din partea populatiei;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q4" value="scaderea"></font></span><font face="Arial"><span style="font-size: 9pt">Scaderea 
+				calitatii produselor prin aplicarea progresului tehnic</span></font></li>
+			</ol>
+			 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">5.
+			<span lang="it">Care dintre urmatoarele caracteristici sunt 
+			specifice economiei tehnico-informationale:</span></span></font></p>
+			<ol style="margin-top: 1pt; font-family:arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q5" value="a">Accesibilitatea 
+				larga a cetatenilor la serviciile oferite</font></span></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q5" value="Inv"></font></span><font face="Arial"><span style="font-size: 9pt">Nevoia 
+				de informare si comunicare este in continua scadere;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q5" value="San"></font></span><font face="Arial"><span style="font-size: 9pt">Informatia 
+				ca &quot;resursa&quot; este mai putin impoartanta decat <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; resursele clasice (munca, capitalul, natura) ;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt"><font face="Arial"><input type="radio" name="q5" value="Agr">Scaderea 
+				ponderii sectorului economic al informatiei atat la <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nivelul economiei nationale cat si la cel 
+				al economiei mondiale</font></span></li>
+			</ol>
+			 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">6. 
+			</span></font>
+			<span style="font-size: 9pt; font-family: Arial" lang="it">Care din 
+			urmatoarele resurse sunt factori de productie?</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Fondul funciar utilizat al unei tari;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Echipamentul de productie al unor fabrici aflate in 
+				activitate;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Capitalul tehnic utilizat;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Resurse subsolului inca neexploatate.</span></font></li>
+			</ol>
+			 
+			<p align="left"><span style="font-size: 9pt"><font face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q6" value="A6">A = a+b+c+d;
+			<input type="radio" name="q6" value="B6">B = a+c+d;
+			<input type="radio" name="q6" value="C6">C = a+b+d;
+			<input type="radio" name="q6" value="D">D = a+b+c.</font></span></p>
+			 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">7. 
+			</span></font>
+			<span style="font-size: 9pt; font-family: Arial" lang="it">Care 
+			dintre urmatoarele afirmatii sunt caracteristici actuale ale pietei 
+			mondiale a informatiei?</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Nevoia de schimb 
+				de informatii dintre agentii economici este in continua scadere;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Are loc o 
+				globalizare a fluxurilor de schimb de informatii sub forma de 
+				fluxuri transfrontiera;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Orientarea catre 
+				utilizator a produselor si serviciilor informationale paralele 
+				cu cresterea gradului de educatie informatica;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<span style="font-size: 9pt">Reducerea accesului la produsele si 
+				serviciile informatice datorita cresterii ridicate ale acestora</span><font face="Arial"><span style="font-size: 9pt">.</span></font></li>
+			</ol>
+			 
+			<p align="left"><span style="font-size: 9pt"><font face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q7" value="ccc">A = a+b+d;
+			<input type="radio" name="q7" value="bbb">B = a+b;
+			<input type="radio" name="q7" value="C">C = b+c;
+			<input type="radio" name="q7" value="ddd">D = c+d.</font></span></p>
+			 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">8. 
+			</span></font>
+			<span style="font-size: 9pt; font-family: Arial" lang="it">Progresul tehnic este contestat puternic atunci cand:</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Este insotit de cresterea somajului;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Este insotit de anumite riscuri proprii activitatii 
+				economice;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Este insotit de efectul poluarii;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Este promovat rapid.</span></font></li>
+			</ol>
+			 
+			<p align="left"><span style="font-size: 9pt"><font face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q8" value="a88">A = b+c+d;
+			<input type="radio" name="q8" value="B">B = a+c;
+			<input type="radio" name="q8" value="San88">C = a+b+c+d;
+			<input type="radio" name="q8" value="Agr88">D = a+d.</font></span></p>
+			 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">9.
+			</span></font>
+			<span lang="IT" style="font-size: 9pt; font-family: Arial">
+			Progresul tehnic contribuie la cresterea numarului de locuri de munca:</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Pe termen scurt;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Prin aplicarea inovatiilor;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Pe termen lung;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Prin substiuirea muncii cu alti factori de productie.</span></font></li>
+			</ol>
+			 
+			<p align="left"><span style="font-size: 9pt"><font face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q9" value="A">A = b+c;
+			<input type="radio" name="q9" value="Inv99">B = a+d;
+			<input type="radio" name="q9" value="San99">C = a+b+c+d;
+			<input type="radio" name="q9" value="Agr99">D = a+b.</font></span></p>
+			 
+			<p align="left"><font face="Arial"><span style="font-size: 9pt">10.
+			</span></font>
+			<span lang="IT" style="font-size: 9pt; font-family: Arial">Printre 
+			efectele pozitive ale progresului tehnic asupra societatii enumeram:</span></p>
+			<ol style="margin-top: 1pt; font-family:Arial; font-size:10pt" type="a">
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Promovarea tehnologiilor nepoluante;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Cresterea somajului pe termen lung;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Cresterea eficientei economice;</span></font></li>
+				<li>
+				<p align="left" style="margin-top: 0; margin-bottom: 0">
+				<font face="Arial"><span style="font-size: 9pt">Opozitia manifestata din partea salariatilor.</span></font></li>
+			</ol>
+			 
+			<p align="left"><span style="font-size: 9pt"><font face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q10" value="a100">A = a+b;
+			<input type="radio" name="q10" value="Inv100">B = a+b+c+d;
+			<input type="radio" name="q10" value="C">C = a+c;
+			<input type="radio" name="q10" value="Agr100">D = b+d.</font></span></p>
+			 
+			<p align="left">&nbsp;</p>
+			 
+			<p align="left"> 
+			 
+			
+
+						
+							
+							</td>
+							<td width="255" align="left" valign="top" style="border-left-width: 1px; border-right: 1px solid #008080; border-top: 1px solid #008080; border-bottom: 1px solid #008080">
+			<p align="left" style="margin-top: 4px; margin-bottom: 4px; line-height:1px"> 
+			<span style="font-size: 9pt"> 
+			<font face="Arial">Raspunsuri corecte&nbsp; </font>
+			</span> 
+			<font style="font-size: 3pt">&nbsp;</font><font face="Arial"><span style="font-size: 9pt">=
+			</span></font> <strong><span style="font-size: 9pt">
+			<font face="Arial"><input class="bgclr" type="text" size="4" name="corecte" disabled><br>
+			<br>
+			</font></span>
+			</strong><font face="Arial"><span style="font-size: 9pt">Raspunsuri gresite&nbsp;&nbsp; = 
+			</span></font> <strong><span style="font-size: 9pt">
+			<font face="Arial"><input class="bgclr" type="text" size="4" name="gresite" disabled><br>
+			</font></span></strong><font face="Arial"><span style="font-size: 9pt"><br>Numar de puncte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			</span><span style="font-size: 5pt">&nbsp;</span><span style="font-size: 9pt">= 
+			</span></font> <strong><span style="font-size: 9pt">
+			<font face="Arial"><input class="bgclr" type="text" size="4" name="punctaj" disabled></font></span></strong><p align="left" style="margin-top: 4px; margin-bottom: 4px; line-height:1px"> 
+			&nbsp;<p align="left" style="margin-top: 4px; margin-bottom: 4px"> 
+			<span style="font-size: 9pt"><font face="Arial"><br>
+			Rezolvare:<br> 
+			<textarea class="bgclr" name="solutions" wrap="virtual" rows="11" cols="30" disabled> 
+			</textarea> 
+			<br>
+			 
+			<input type="button" value="Verifica" name="but3" onClick="getScore(this.form)"></font></span></td>
+</form> 
+						</tr>
+						<tr>
+							<td colspan="2" bgcolor="#008080">
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<font face="Arial" size="2" color="#FFFFFF">Fiecare 
+							raspuns corect este notat cu 6 puncte. Total punctaj 
+							TEST C = 60 puncte</font></td>
+						</tr>
+						<tr>
+							<td>
+							&nbsp;</td>
+							<td width="255">
+							&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="2" bgcolor="#008080">
+							<p align="left" style="margin-top: 0; margin-bottom: 0">
+							<b><font face="Arial" size="2" color="#FFFFFF">Numar 
+							total de puncte = 100; Testul se considera promovat 
+							daca s-au realizat minim 70 de puncte!</font></b></td>
+						</tr>
+						<tr>
+							<td>
+							&nbsp;</td>
+							<td width="255">
+							&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="2" bgcolor="#008080">
+							<b><font face="Arial" color="#FFFFFF">Numar de puncte acumulate =</font></b> <strong><input class="bgclr" type="text" size="4" name="punctajt" disabled>
+							<input class="bgclr" type=hidden size="100" name="mesaj">
+							<input type="button" value="Punctaj total" onClick="PunctajTotal(this.form)"> 
+							<input type="reset" value="Reseteaza" onclick="Reset(this.form)"> 
+
+							&nbsp;</td>
+						</tr>
+						<tr>
+							<td>
+							<span style="font-family: Arial">
+							<font size="4">
+							<strong><font size="2"> 
+
+							<p>&nbsp;</td>
+							<td width="255">
+							<span style="font-family: Arial">
+							<BODY> 
+ 
+<font size="2">
+<!--<form name="general">-->
+</font><font size="4">
+							<b><strong><font size="2"> 
+
+<p><p> 
+
+							<p>&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" align="center" height="17" style="border: 1px solid #008080" colspan="2" bgcolor="#007777">
+				
+		<tr>
+  <td valign="top" align="center" height="23" style="border: 1px solid #008080" colspan="2" bgcolor="#008080">
+    <p style="margin-top: 0; margin-bottom: 0">
+      <font color="#FFFFFF" face="Arial" size="1">Copyright </font>
+      <span class="Apple-style-span" style="color: rgb(255, 255, 255); font-family: Arial; text-align: center">
+        <font size="1">© Maria-Magdalena Dorcioman - 2025</font>
+      </span>
+    </p>
+  </td>
+</tr>

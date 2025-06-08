@@ -1,0 +1,48 @@
+.menu_style {
+	font-family: Tahoma;
+	font-size: 12px;
+	color:#333333;
+}
+.menu_style:visited{color:#666666}
+.menu_style:hover{color:#FF9900;}
+
+.main_style {
+	font-family: Tahoma;
+	font-size: 12px;
+}
+
+.style6 {font-size: 16px; font-family: Tahoma;color:#333333;}
+.style6:visited {color:#666666;}
+.style6:hover {color:#FF9900;}
+.style1_orange {
+	font-family: Tahoma;
+	font-size: 18px;
+	font-weight: bold;
+	color: #FF3300;
+}
+.style1 {
+	font-family: Tahoma;
+	font-size: 16px;
+	font-weight: bold;
+}
+.style_avertizare {
+	font-family: Tahoma;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: normal;
+	color: #666666;
+}
+.menu_style2 {
+	font-family: Tahoma;
+	font-size: 14px;
+	color:#FF6600;
+	font-weight: bold;
+}
+.menu_style2:visited {
+	color:#666666;
+	font-weight: bold;
+}
+.menu_style2:hover {
+	color:#999999;
+	font-weight: bold;
+}
